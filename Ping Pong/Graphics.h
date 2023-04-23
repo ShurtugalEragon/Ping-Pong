@@ -14,6 +14,8 @@ public:
 
 	int get_window_width() const { return width; }
 	int get_window_height() const { return height; }
+
+	SDL_Renderer* get_renderer() const { return renderer.get(); }
 private:
 	window_ptr window;
 	renderer_ptr renderer;

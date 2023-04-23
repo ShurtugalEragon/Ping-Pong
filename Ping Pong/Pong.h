@@ -4,6 +4,8 @@
 #include "Ball.h"
 #include "Paddle.h"
 
+#include "Text.h"
+
 class Pong
 {
 public:
@@ -19,9 +21,15 @@ private:
 	Paddle left_paddle{ 50, 50, 8, graphics.get_window_height() / 5, 255, 255, 255, 255, 500 };
 	Paddle right_paddle{ graphics.get_window_width()-60, 50, 8, graphics.get_window_height() / 5, 255, 255, 255, 255, 500 };
 
+	Text left_player_score_text{ graphics,"RonysiswadiArchitect6-X3V9G.ttf",50,"0",SDL_Color{255,255,255,255},graphics.get_window_width() / 4,50 };
+	Text right_player_score_text{ graphics,"RonysiswadiArchitect6-X3V9G.ttf",50,"0",SDL_Color{255,255,255,255},graphics.get_window_width() * 0.75,50 };
+
 
 	void handle_key_press(const SDL_Event& e);
 	void update();
 	void draw();
 	void play();
+
+	int left_player_score = 0;
+	int right_player_score = 0;
 };

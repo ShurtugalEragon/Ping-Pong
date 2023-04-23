@@ -3,6 +3,11 @@
 #include "Graphics.h"
 #include "Paddle.h"
 
+enum class Collision
+{
+	LEFT_BORDER, RIGHT_BORDER, TOP_BORDER, BOTTOM_BORDER, LEFT_PADDLE, RIGHT_PADDLE, NONE
+};
+
 class Ball
 {
 public:
@@ -21,7 +26,7 @@ public:
 	Ball(int x_ = 0, int y_ = 0, int s = 1, int r_ = 255, int g_ = 255, int b_ = 255, int a_ = 255,int vx = 0, int vy = 0);
 	void update(double seconds);
 	void draw(const Graphics& graphics);
-	void check_collisions(int window_height, int window_width, const Paddle& left, const Paddle& right);
+	Collision check_collisions(int window_height, int window_width, const Paddle& left, const Paddle& right);
 	void apply_random_velocity();
 private:
 	int side_length;

@@ -3,6 +3,7 @@
 #include <memory>
 #include <chrono>
 #include "Paddle.h"
+#include <string>
 
 Pong::Pong()
 {
@@ -60,9 +61,20 @@ void Pong::handle_key_press(const SDL_Event& e)
 void Pong::update()
 {
 	ball.update(frame_time);
-	ball.check_collisions(graphics.get_window_height(), graphics.get_window_width(),left_paddle,right_paddle);
+	Collision collision = ball.check_collisions(graphics.get_window_height(), graphics.get_window_width(),left_paddle,right_paddle);
 	left_paddle.update(frame_time,graphics.get_window_height());
 	right_paddle.update(frame_time,graphics.get_window_height());
+
+	if (collision == Collision::LEFT_BORDER)
+	{
+		++right_player_score;
+		right_player_score_text.update_text(std::to_string(right_player_score), graphics);
+	}
+	else if (collision == Collision::RIGHT_BORDER)
+	{
+		++left_player_score;
+		left_player_score_text.update_text(std::to_string(left_player_score), graphics);
+	}
 }
 
 void Pong::draw()
@@ -70,6 +82,8 @@ void Pong::draw()
 	ball.draw(graphics);
 	left_paddle.draw(graphics);
 	right_paddle.draw(graphics);
+	left_player_score_text.draw(graphics);
+	right_player_score_text.draw(graphics);
 }
 
 void Pong::play()

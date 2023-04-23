@@ -8,6 +8,10 @@ int main(int argc, char* args[])
 		{
 			throw std::runtime_error(SDL_GetError());
 		}
+		if (TTF_Init() == -1)
+		{
+			throw std::runtime_error(TTF_GetError());
+		}
 		Pong game;
 	}
 	catch (std::exception& e)

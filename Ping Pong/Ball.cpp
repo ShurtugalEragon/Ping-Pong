@@ -3,6 +3,7 @@
 #include "Random.h"
 #include <cmath>
 
+
 Ball::Ball(int x_, int y_, int s, int r_, int g_, int b_, int a_,int vx,int vy)
 	:side_length{ s }, r{ r_ }, g{ g_ }, b{ b_ }, a{ a_ },x_velocity {
 	vx
@@ -30,13 +31,15 @@ void Ball::draw(const Graphics& graphics)
 	graphics.draw(&square, r, g, b, a);
 }
 
-void Ball::check_collisions(int window_height,int window_width, const Paddle& left, const Paddle& right)
+Collision Ball::check_collisions(int window_height,int window_width, const Paddle& left, const Paddle& right)
 {
+	Collision collision = Collision::NONE;
 	// top window border
 	if (square.y <= 0)
 	{
 		y_velocity *= -1;
 		if (square.y < 0) square.y = 0;
+		collision = Collision::TOP_BORDER;
 	}
 
 	// bottom window border
@@ -44,6 +47,7 @@ void Ball::check_collisions(int window_height,int window_width, const Paddle& le
 	{
 		y_velocity *= -1;
 		if (square.y + square.h > window_height) square.y = window_height - square.h;
+		collision = Collision::BOTTOM_BORDER;
 	}
 
 	// right window border
@@ -52,6 +56,7 @@ void Ball::check_collisions(int window_height,int window_width, const Paddle& le
 		square.x = window_width / 2;
 		square.y = window_height / 2;
 		apply_random_velocity();
+		collision = Collision::RIGHT_BORDER;
 	}
 
 	// left window border
@@ -60,6 +65,7 @@ void Ball::check_collisions(int window_height,int window_width, const Paddle& le
 		square.x = window_width / 2;
 		square.y = window_height / 2;
 		apply_random_velocity();
+		collision = Collision::LEFT_BORDER;
 	}
 
 	// left paddle
@@ -73,6 +79,7 @@ void Ball::check_collisions(int window_height,int window_width, const Paddle& le
 		{
 			y_velocity *= -1;
 		}
+		collision = Collision::LEFT_PADDLE;
 	}
 	
 	// right paddle
@@ -86,7 +93,9 @@ void Ball::check_collisions(int window_height,int window_width, const Paddle& le
 		{
 			y_velocity *= -1;
 		}
+		collision = Collision::RIGHT_PADDLE;
 	}
+	return collision;
 }
 
 void Ball::apply_random_velocity()
