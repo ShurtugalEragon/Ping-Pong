@@ -18,7 +18,17 @@ Pong::~Pong()
 
 void Pong::handle_key_press(const SDL_Event& e)
 {
-	// key is pressed
+	//---------------------key is pressed---------------------
+	if (e.type == SDL_KEYDOWN)
+	{
+		switch (e.key.keysym.sym)
+		{
+		case SDLK_p:
+			paused = true;
+			pause();
+			break;
+		}
+	}
 	if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 	{
 		switch (e.key.keysym.sym)
@@ -38,7 +48,11 @@ void Pong::handle_key_press(const SDL_Event& e)
 		}
 		
 	}
-	// key is released
+	//--------------------------------------------------------
+
+
+
+	//--------------------key is released---------------------
 	else if (e.type == SDL_KEYUP && e.key.repeat == 0)
 	{
 		switch (e.key.keysym.sym)
@@ -57,6 +71,7 @@ void Pong::handle_key_press(const SDL_Event& e)
 			break;
 		}
 	}
+	//--------------------------------------------------------
 }
 
 void Pong::update()
@@ -77,7 +92,7 @@ void Pong::update()
 		left_player_score_text.update_text(std::to_string(left_player_score), graphics);
 	}
 	if (left_player_score == 11) left_win = true;
-	else if (left_player_score == 11) right_win = true;
+	else if (right_player_score == 11) right_win = true;
 }
 
 void Pong::draw()
@@ -87,6 +102,8 @@ void Pong::draw()
 	right_paddle.draw(graphics);
 	left_player_score_text.draw(graphics);
 	right_player_score_text.draw(graphics);
+	if (left_win) left_win_message.draw(graphics);
+	else if (right_win) right_win_message.draw(graphics);
 }
 
 void Pong::play()
@@ -116,6 +133,9 @@ void Pong::play()
 
 		graphics.present();
 
+		auto stop_time = std::chrono::high_resolution_clock::now();
+		frame_time = std::chrono::duration<double>(stop_time - start_time).count();
+
 		if (left_win || right_win)
 		{
 			ball.reset(graphics.get_window_width(), graphics.get_window_height());
@@ -125,10 +145,33 @@ void Pong::play()
 			right_player_score_text.update_text("0", graphics);
 			left_win = false;
 			right_win = false;
+			SDL_Delay(2500);			// keep win message up
+			frame_time = 0.0;
 		}
+	}
+}
 
-		auto stop_time = std::chrono::high_resolution_clock::now();
-		frame_time = std::chrono::duration<double>(stop_time - start_time).count();
+void Pong::pause()
+{
+	SDL_Event event;
+	while (playing)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				playing = false;
+				break;
+			case SDL_KEYDOWN:
+				if (event.key.keysym.sym == SDLK_p)
+				{
+					paused = false;
+					play();
+				}
+			}
+
+		}
 	}
 }
 

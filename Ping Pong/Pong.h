@@ -24,15 +24,22 @@ private:
 	Text left_player_score_text{ graphics,"RonysiswadiArchitect6-X3V9G.ttf",50,"0",SDL_Color{255,255,255,255},graphics.get_window_width() / 4,50 };
 	Text right_player_score_text{ graphics,"RonysiswadiArchitect6-X3V9G.ttf",50,"0",SDL_Color{255,255,255,255},graphics.get_window_width() * 0.75,50 };
 
+	Text left_win_message{ graphics,"RonysiswadiArchitect6-X3V9G.ttf",75,"Left player wins!",SDL_Color{255,255,255,255},
+	graphics.get_window_width() / 3.25, graphics.get_window_height() / 3 };
+
+	Text right_win_message{ graphics,"RonysiswadiArchitect6-X3V9G.ttf",75,"Right player wins!",SDL_Color{255,255,255,255},
+	graphics.get_window_width() / 3.25, graphics.get_window_height() / 3 };
 
 	void handle_key_press(const SDL_Event& e);
 	void update();
 	void draw();
 	void play();
+	void pause();
 
 	int left_player_score = 0;
 	int right_player_score = 0;
 
 	bool left_win = false;
 	bool right_win = false;
+	bool paused = false;
 };
