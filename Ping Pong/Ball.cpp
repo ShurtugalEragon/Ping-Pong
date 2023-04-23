@@ -108,4 +108,12 @@ void Ball::apply_random_velocity()
 	x_velocity = speed * x_direction / direction_magnitude;
 	y_velocity = speed * y_direction / direction_magnitude;
 	if (abs(x_velocity) < 200) apply_random_velocity();		// too slow for frame time for the ball to move horizontally 
+	if (abs(y_velocity) < 200) apply_random_velocity();
+}
+
+void Ball::reset(int window_width, int window_height)
+{
+	square.x = window_width / 2;
+	square.y = window_height / 2;
+	apply_random_velocity();
 }

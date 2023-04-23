@@ -7,6 +7,7 @@
 
 Pong::Pong()
 {
+	ball.apply_random_velocity();
 	play();
 }
 
@@ -75,6 +76,8 @@ void Pong::update()
 		++left_player_score;
 		left_player_score_text.update_text(std::to_string(left_player_score), graphics);
 	}
+	if (left_player_score == 11) left_win = true;
+	else if (left_player_score == 11) right_win = true;
 }
 
 void Pong::draw()
@@ -112,6 +115,17 @@ void Pong::play()
 		draw();
 
 		graphics.present();
+
+		if (left_win || right_win)
+		{
+			ball.reset(graphics.get_window_width(), graphics.get_window_height());
+			left_player_score = 0;
+			right_player_score = 0;
+			left_player_score_text.update_text("0", graphics);
+			right_player_score_text.update_text("0", graphics);
+			left_win = false;
+			right_win = false;
+		}
 
 		auto stop_time = std::chrono::high_resolution_clock::now();
 		frame_time = std::chrono::duration<double>(stop_time - start_time).count();

@@ -28,6 +28,7 @@ public:
 	void draw(const Graphics& graphics);
 	Collision check_collisions(int window_height, int window_width, const Paddle& left, const Paddle& right);
 	void apply_random_velocity();
+	void reset(int window_width, int window_height);
 private:
 	int side_length;
 	int r;

@@ -17,7 +17,7 @@ private:
 
 	Graphics graphics{ "Ping Pong" };
 
-	Ball ball{ graphics.get_window_width() / 2,graphics.get_window_height() / 2,10,255,255,255,255,550,0 };
+	Ball ball{ graphics.get_window_width() / 2,graphics.get_window_height() / 2,10,255,255,255,255,800,0 };
 	Paddle left_paddle{ 50, 50, 8, graphics.get_window_height() / 5, 255, 255, 255, 255, 500 };
 	Paddle right_paddle{ graphics.get_window_width()-60, 50, 8, graphics.get_window_height() / 5, 255, 255, 255, 255, 500 };
 
@@ -32,4 +32,7 @@ private:
 
 	int left_player_score = 0;
 	int right_player_score = 0;
+
+	bool left_win = false;
+	bool right_win = false;
 };
