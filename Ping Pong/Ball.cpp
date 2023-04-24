@@ -69,7 +69,7 @@ Collision Ball::check_collisions(int window_height,int window_width, const Paddl
 	}
 
 	// left paddle
-	if (square.x <= left.get_x() + left.get_w() && ((square.y >= left.get_y() && square.y <= left.get_y() + left.get_h())
+	if (square.x <= left.get_x() + left.get_w() && square.x >= left.get_x() && ((square.y >= left.get_y() && square.y <= left.get_y() + left.get_h())
 		|| (square.y + square.h >= left.get_y() && square.y + square.h <= left.get_y() + left.get_h())))
 	{
 		x_velocity *= -1;
@@ -83,7 +83,7 @@ Collision Ball::check_collisions(int window_height,int window_width, const Paddl
 	}
 	
 	// right paddle
-	if (square.x >= right.get_x() && ((square.y >= right.get_y() && square.y <= right.get_y() + right.get_h())
+	if (square.x + square.w >= right.get_x() && square.x + square.w <= right.get_x() + right.get_w() && ((square.y >= right.get_y() && square.y <= right.get_y() + right.get_h())
 		|| (square.y + square.h >= right.get_y() && square.y + square.h <= right.get_y() + right.get_h())))
 	{
 		x_velocity *= -1;
