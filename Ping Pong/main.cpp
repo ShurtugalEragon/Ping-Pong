@@ -8,11 +8,16 @@ int main(int argc, char* args[])
 		{
 			throw std::runtime_error(SDL_GetError());
 		}
+
 		if (TTF_Init() == -1)
 		{
 			throw std::runtime_error(TTF_GetError());
 		}
-		Pong game;
+
+		{					// scope to force TTF_CloseFont to be called before TTF_Quit() 
+			Pong game;
+		}
+		TTF_Quit();
 	}
 	catch (std::exception& e)
 	{
