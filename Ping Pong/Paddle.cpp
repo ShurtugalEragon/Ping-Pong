@@ -2,16 +2,16 @@
 #include <cmath>
 #include <stdexcept>
 
-Paddle::Paddle(int x_, int y_, int w, int h, int r_, int g_, int b_, int a_, int s)
-	:x{ x_ }, y{ y_ }, width{w}, height{ h }, r{ r_ }, g{ g_ }, b{ b_ }, a{ a_ }, speed{ s }
+Paddle::Paddle(int x_, int y_, int w, int h, SDL_Color color_, int s)
+	:x{ x_ }, y{ y_ }, width{w}, height{ h }, color{color_}, speed{s}
 {
 	if (x_ < 0) throw std::runtime_error("negative paddle top left x coord");
 	if (y_ < 0) throw std::runtime_error("negative paddle top left y coord");
 	if (s <= 0) throw std::runtime_error("nonpositive paddle side length");
-	if (r_ < 0 || r_ > 255) throw std::runtime_error("paddle red color component not within [0,255]");
-	if (g_ < 0 || g_ > 255) throw std::runtime_error("paddle green color component not within [0,255]");
-	if (b_ < 0 || b_ > 255) throw std::runtime_error("paddle blue color component not within [0,255]");
-	if (a_ < 0 || a_ > 255) throw std::runtime_error("paddle alpha color component not within [0,255]");
+	if (color_.r < 0 || color_.r > 255) throw std::runtime_error("paddle red color component not within [0,255]");
+	if (color_.g < 0 || color_.g > 255) throw std::runtime_error("paddle green color component not within [0,255]");
+	if (color_.b < 0 || color_.b > 255) throw std::runtime_error("paddle blue color component not within [0,255]");
+	if (color_.a < 0 || color_.a > 255) throw std::runtime_error("paddle alpha color component not within [0,255]");
 	if (s == 0) throw std::runtime_error("paddle must have nonzero vertical speed value");
 
 	rectangle = SDL_Rect{ x_,y_,w,h };
@@ -53,5 +53,5 @@ void Paddle::update(double seconds, int window_height)
 
 void Paddle::draw(const Graphics& graphics)
 {
-	graphics.draw(&rectangle, r, g, b, a);
+	graphics.draw(&rectangle, color);
 }

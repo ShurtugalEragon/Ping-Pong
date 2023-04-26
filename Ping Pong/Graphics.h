@@ -9,7 +9,7 @@ public:
 	Graphics(std::string window_title = "Default");
 	void clear_screen();
 	void draw(const std::vector<SDL_Point>& points) const;
-	void draw(SDL_Rect* rect, int r,int g,int b,int a) const;
+	void draw(SDL_Rect* rect, SDL_Color color) const;
 	void present();
 
 	int get_window_width() const { return width; }

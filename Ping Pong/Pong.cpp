@@ -77,9 +77,9 @@ void Pong::handle_key_press(const SDL_Event& e)
 void Pong::update()
 {
 	ball.update(frame_time);
-	Collision collision = ball.check_collisions(graphics.get_window_height(), graphics.get_window_width(),left_paddle,right_paddle);
-	left_paddle.update(frame_time,graphics.get_window_height());
-	right_paddle.update(frame_time,graphics.get_window_height());
+	Collision collision = ball.check_collisions(WINDOW_HEIGHT, WINDOW_WIDTH,left_paddle,right_paddle);
+	left_paddle.update(frame_time,WINDOW_HEIGHT);
+	right_paddle.update(frame_time,WINDOW_HEIGHT);
 
 	if (collision == Collision::LEFT_BORDER)
 	{
@@ -102,8 +102,8 @@ void Pong::draw()
 	right_paddle.draw(graphics);
 	left_player_score_text.draw(graphics);
 	right_player_score_text.draw(graphics);
-	if (left_win) left_win_message.draw(graphics);
-	else if (right_win) right_win_message.draw(graphics);
+	if (left_win) left_win_text.draw(graphics);
+	else if (right_win) right_win_text.draw(graphics);
 }
 
 void Pong::play()
@@ -138,7 +138,7 @@ void Pong::play()
 
 		if (left_win || right_win)
 		{
-			ball.reset(graphics.get_window_width(), graphics.get_window_height());
+			ball.reset(WINDOW_WIDTH, WINDOW_HEIGHT);
 			left_player_score = 0;
 			right_player_score = 0;
 			left_player_score_text.update_text("0", graphics);

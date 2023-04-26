@@ -4,18 +4,18 @@
 #include <cmath>
 
 
-Ball::Ball(int x_, int y_, int s, int r_, int g_, int b_, int a_,int vx,int vy)
-	:side_length{ s }, r{ r_ }, g{ g_ }, b{ b_ }, a{ a_ },x_velocity {
+Ball::Ball(int x_, int y_, int s, SDL_Color color_,int vx,int vy)
+	:side_length{ s }, color{color_}, x_velocity{
 	vx
 }, y_velocity{ vy }
 {
 	if (x_ < 0) throw std::runtime_error("negative ball top left x coord");
 	if (y_ < 0) throw std::runtime_error("negative ball top left y coord");
 	if (s <= 0) throw std::runtime_error("nonpositive ball side length");
-	if (r_ < 0 || r_ > 255) throw std::runtime_error("ball red color component not within [0,255]");
-	if (g_ < 0 || g_ > 255) throw std::runtime_error("ball green color component not within [0,255]");
-	if (b_ < 0 || b_ > 255) throw std::runtime_error("ball blue color component not within [0,255]");
-	if (a_ < 0 || a_ > 255) throw std::runtime_error("ball alpha color component not within [0,255]");
+	if (color_.r < 0 || color_.r > 255) throw std::runtime_error("ball red color component not within [0,255]");
+	if (color_.g < 0 || color_.g > 255) throw std::runtime_error("ball green color component not within [0,255]");
+	if (color_.b < 0 || color_.b > 255) throw std::runtime_error("ball blue color component not within [0,255]");
+	if (color_.a < 0 || color_.a > 255) throw std::runtime_error("ball alpha color component not within [0,255]");
 
 	square = SDL_Rect{ x_,y_,s,s };
 }
@@ -28,7 +28,7 @@ void Ball::update(double seconds)
 
 void Ball::draw(const Graphics& graphics)
 {
-	graphics.draw(&square, r, g, b, a);
+	graphics.draw(&square, color);
 }
 
 Collision Ball::check_collisions(int window_height,int window_width, const Paddle& left, const Paddle& right)

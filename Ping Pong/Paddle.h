@@ -22,7 +22,7 @@ public:
 	/// <param name="b_">blue</param>
 	/// <param name="a_">alpha</param>
 	/// <param name="s">vertical speed</param>
-	Paddle(int x_, int y_, int w, int h, int r_, int g_, int b_, int a_, int s);
+	Paddle(int x_ = 0, int y_ = 0, int w = 1, int h = 1, SDL_Color color_ = SDL_Color{255,255,255,255}, int s = 200);
 
 	void move(Direction d);
 	void stop();
@@ -40,10 +40,7 @@ private:
 	int y;
 	int width;
 	int height;
-	int r;
-	int g;
-	int b;
-	int a;
+	SDL_Color color;
 	int speed;					// max vertical speed
 	int velocity;				// actual real-time velocity
 
