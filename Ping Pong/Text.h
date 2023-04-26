@@ -8,6 +8,7 @@ class Text
 {
 public:
 	Text(const Graphics& graphics, std::string font_file_path = "", int point_size_ = 1, std::string text_ = "", SDL_Color color_ = SDL_Color{ 255,255,255,255 }, int x_ = 0, int y_ = 0);
+	Text();
 
 	void draw(const Graphics& graphics);
 	void update_text(std::string text_, const Graphics& graphics);

@@ -8,12 +8,38 @@
 Pong::Pong()
 {
 	ball.apply_random_velocity();
-	play();
+	show_main_menu();
 }
 
 Pong::~Pong()
 {
 	SDL_Quit();
+}
+
+void Pong::show_main_menu()
+{
+	play_button.draw(graphics);
+	quit_button.draw(graphics);
+	graphics.present();
+	while (!quit)
+	{
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				quit = true;
+				break;
+			}
+			if (play_button.clicked())
+			{
+				reset();
+				start();
+			}
+			else if (quit_button.clicked()) quit = true;
+		}
+	}
 }
 
 void Pong::handle_key_press(const SDL_Event& e)
@@ -26,6 +52,10 @@ void Pong::handle_key_press(const SDL_Event& e)
 		case SDLK_p:
 			paused = true;
 			pause();
+			break;
+		case SDLK_m:
+			graphics.clear_screen();
+			show_main_menu();
 			break;
 		}
 	}
@@ -106,9 +136,9 @@ void Pong::draw()
 	else if (right_win) right_win_text.draw(graphics);
 }
 
-void Pong::play()
+void Pong::start()
 {
-	while (playing)
+	while (!quit)
 	{
 		auto start_time = std::chrono::high_resolution_clock::now();
 
@@ -119,7 +149,7 @@ void Pong::play()
 			switch (event.type)
 			{
 			case SDL_QUIT:
-				playing = false;
+				quit = true;
 				break;
 			}
 			handle_key_press(event);
@@ -138,41 +168,48 @@ void Pong::play()
 
 		if (left_win || right_win)
 		{
-			ball.reset(WINDOW_WIDTH, WINDOW_HEIGHT);
-			left_player_score = 0;
-			right_player_score = 0;
-			left_player_score_text.update_text("0", graphics);
-			right_player_score_text.update_text("0", graphics);
-			left_win = false;
-			right_win = false;
+			reset();
 			SDL_Delay(2500);			// keep win message up
-			frame_time = 0.0;
 		}
 	}
 }
 
 void Pong::pause()
 {
+	pause_text.draw(graphics);
+	graphics.present();
 	SDL_Event event;
-	while (playing)
+	while (!quit)
 	{
 		while (SDL_PollEvent(&event))
 		{
 			switch (event.type)
 			{
 			case SDL_QUIT:
-				playing = false;
+				quit = true;
 				break;
 			case SDL_KEYDOWN:
 				if (event.key.keysym.sym == SDLK_p)
 				{
 					paused = false;
-					play();
+					start();
 				}
 			}
 
 		}
 	}
+}
+
+void Pong::reset()
+{
+	ball.reset(WINDOW_WIDTH, WINDOW_HEIGHT);
+	left_player_score = 0;
+	right_player_score = 0;
+	left_player_score_text.update_text("0", graphics);
+	right_player_score_text.update_text("0", graphics);
+	left_win = false;
+	right_win = false;
+	frame_time = 0.0;
 }
 
 

@@ -23,11 +23,18 @@ void Graphics::clear_screen()
 	if (SDL_RenderClear(renderer.get()) < 0) throw std::runtime_error(SDL_GetError());
 }
 
-void Graphics::draw(SDL_Rect* rect,SDL_Color color) const
+void Graphics::draw(SDL_Rect* rect,SDL_Color color, bool fill) const
 {
 
 	if (SDL_SetRenderDrawColor(renderer.get(), color.r, color.g, color.b, color.a) < 0) throw std::runtime_error(SDL_GetError());
-	if (SDL_RenderFillRect(renderer.get(), rect) < 0) throw std::runtime_error(SDL_GetError());
+	if (fill)
+	{
+		if (SDL_RenderFillRect(renderer.get(), rect) < 0) throw std::runtime_error(SDL_GetError());
+	}
+	else
+	{
+		if (SDL_RenderDrawRect(renderer.get(), rect) < 0) throw std::runtime_error(SDL_GetError());
+	}
 }
 void Graphics::present()
 {

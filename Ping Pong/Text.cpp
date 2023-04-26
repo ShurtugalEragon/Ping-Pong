@@ -14,6 +14,12 @@ Text::Text(const Graphics& graphics, std::string font_file_path, int point_size_
 	if (!texture) throw std::runtime_error(SDL_GetError());
 }
 
+Text::Text()
+	:point_size{ 1 }, text{ "" }, color{ SDL_Color{255,255,255,255} }, x{ 0 }, y{ 0 }
+{
+
+}
+
 void Text::draw(const Graphics& graphics)
 {
 	SDL_Rect destination_rect{ x,y,surface.get()->w,surface.get()->h };
