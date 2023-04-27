@@ -55,3 +55,8 @@ void Paddle::draw(const Graphics& graphics)
 {
 	graphics.draw(&rectangle, color);
 }
+
+void Paddle::change_color(SDL_Color color_)
+{
+	color = color_;
+}

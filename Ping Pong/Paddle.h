@@ -28,6 +28,7 @@ public:
 	void stop();
 	void update(double seconds, int window_height);
 	void draw(const Graphics& graphics);
+	void change_color(SDL_Color color_);
 
 	int get_x() const {	return x; }
 	int get_y() const { return y; }

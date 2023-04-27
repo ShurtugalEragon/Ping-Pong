@@ -12,6 +12,7 @@ public:
 
 	void draw(const Graphics& graphics);
 	void update_text(std::string text_, const Graphics& graphics);
+	void change_color(SDL_Color color_, const Graphics& graphics);
 private:
 	int point_size;
 	font_ptr font;

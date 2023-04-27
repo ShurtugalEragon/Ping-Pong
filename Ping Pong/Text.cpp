@@ -36,3 +36,9 @@ void Text::update_text(std::string text_, const Graphics& graphics)
 	texture = texture_ptr(SDL_CreateTextureFromSurface(graphics.get_renderer(), surface.get()));
 	if (!texture) throw std::runtime_error(SDL_GetError());
 }
+
+void Text::change_color(SDL_Color color_, const Graphics& graphics)
+{
+	color = color_;
+	update_text(text, graphics);
+}

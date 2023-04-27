@@ -26,6 +26,7 @@ public:
 	Collision check_collisions(int window_height, int window_width, const Paddle& left, const Paddle& right);
 	void apply_random_velocity();
 	void reset(int window_width, int window_height);
+	void change_color(SDL_Color color_);
 private:
 	int side_length;
 	SDL_Color color;

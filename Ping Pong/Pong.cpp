@@ -18,7 +18,11 @@ Pong::~Pong()
 
 void Pong::show_main_menu()
 {
+	graphics.clear_screen();
 	play_button.draw(graphics);
+	ball_color.draw(graphics);
+	left_paddle_color.draw(graphics);
+	right_paddle_color.draw(graphics);
 	quit_button.draw(graphics);
 	graphics.present();
 	while (!quit)
@@ -37,7 +41,163 @@ void Pong::show_main_menu()
 				reset();
 				start();
 			}
+			else if (ball_color.clicked()) show_color_picker(ball);
+			else if (left_paddle_color.clicked()) show_color_picker(left_paddle,left_player_score_text);
+			else if (right_paddle_color.clicked()) show_color_picker(right_paddle,right_player_score_text);
 			else if (quit_button.clicked()) quit = true;
+		}
+	}
+}
+
+void Pong::show_color_picker(Paddle& paddle, Text& score_text, bool paused)
+{
+	graphics.clear_screen();
+
+	red.draw(graphics);
+	orange.draw(graphics);
+	yellow.draw(graphics);
+
+	green.draw(graphics);
+	blue.draw(graphics);
+	indigo.draw(graphics);
+
+	violet.draw(graphics);
+
+	graphics.present();
+
+	SDL_Event event;
+	while (!quit)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				quit = true;
+				break;
+			}
+			if (red.clicked())
+			{
+				paddle.change_color(RED);
+				score_text.change_color(RED, graphics);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (orange.clicked())
+			{
+				paddle.change_color(ORANGE);
+				score_text.change_color(ORANGE,graphics);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (yellow.clicked())
+			{
+				paddle.change_color(YELLOW);
+				score_text.change_color(YELLOW,graphics);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (green.clicked())
+			{
+				paddle.change_color(GREEN);
+				score_text.change_color(GREEN,graphics);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (blue.clicked())
+			{
+				paddle.change_color(BLUE);
+				score_text.change_color(BLUE,graphics);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (indigo.clicked())
+			{
+				paddle.change_color(INDIGO);
+				score_text.change_color(INDIGO,graphics);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (violet.clicked())
+			{
+				paddle.change_color(VIOLET);
+				score_text.change_color(VIOLET,graphics);
+				if (paused) start();
+				show_main_menu();
+			}
+		}
+	}
+}
+
+void Pong::show_color_picker(Ball& ball, bool paused)
+{
+	graphics.clear_screen();
+
+	red.draw(graphics);
+	orange.draw(graphics);
+	yellow.draw(graphics);
+
+	green.draw(graphics);
+	blue.draw(graphics);
+	indigo.draw(graphics);
+
+	violet.draw(graphics);
+
+	graphics.present();
+
+	SDL_Event event;
+	while (!quit)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				quit = true;
+				break;
+			}
+			if (red.clicked())
+			{
+				ball.change_color(RED);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (orange.clicked())
+			{
+				ball.change_color(ORANGE);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (yellow.clicked())
+			{
+				ball.change_color(YELLOW);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (green.clicked())
+			{
+				ball.change_color(GREEN);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (blue.clicked())
+			{
+				ball.change_color(BLUE);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (indigo.clicked())
+			{
+				ball.change_color(INDIGO);
+				if (paused) start();
+				show_main_menu();
+			}
+			else if (violet.clicked())
+			{
+				ball.change_color(VIOLET);
+				if (paused) start();
+				show_main_menu();
+			}
 		}
 	}
 }
@@ -54,7 +214,6 @@ void Pong::handle_key_press(const SDL_Event& e)
 			pause();
 			break;
 		case SDLK_m:
-			graphics.clear_screen();
 			show_main_menu();
 			break;
 		}
@@ -176,7 +335,12 @@ void Pong::start()
 
 void Pong::pause()
 {
+	graphics.clear_screen();
 	pause_text.draw(graphics);
+	ball_color.draw(graphics);
+	left_paddle_color.draw(graphics);
+	right_paddle_color.draw(graphics);
+	quit_button.draw(graphics);
 	graphics.present();
 	SDL_Event event;
 	while (!quit)
@@ -195,7 +359,10 @@ void Pong::pause()
 					start();
 				}
 			}
-
+			if (ball_color.clicked()) show_color_picker(ball,true);
+			else if (left_paddle_color.clicked()) show_color_picker(left_paddle, left_player_score_text,true);
+			else if (right_paddle_color.clicked()) show_color_picker(right_paddle, right_player_score_text,true);
+			else if (quit_button.clicked()) quit = true;
 		}
 	}
 }

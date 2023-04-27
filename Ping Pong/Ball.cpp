@@ -117,3 +117,8 @@ void Ball::reset(int window_width, int window_height)
 	square.y = window_height / 2;
 	apply_random_velocity();
 }
+
+void Ball::change_color(SDL_Color color_)
+{
+	color = color_;
+}
