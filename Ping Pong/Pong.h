@@ -6,12 +6,12 @@
 #include "Text_Button.h"
 #include "Text.h"
 #include "Button.h"
+#include "Sound_Effect.h"
 
 class Pong
 {
 public:
 	Pong();
-	~Pong();
 private:
 	
 	bool quit = false;
@@ -109,6 +109,7 @@ private:
 	//--------------------------FILE CONSTANTS----------------------------
 	
 	const std::string FONT_FILE_PATH = "RonysiswadiArchitect6-X3V9G.ttf";
+	const std::string BALL_SOUND_EFFECT_FILE_PATH = "ball.wav";
 
 	//--------------------------------------------------------------------
 
@@ -179,6 +180,8 @@ private:
 	Text right_win_text{ graphics,FONT_FILE_PATH,WIN_MSG_TEXT_SIZE,RIGHT_WIN_MESSAGE,WHITE,
 	WIN_MSG_TEXT_X, WIN_MSG_TEXT_Y };
 	Text pause_text{ graphics,FONT_FILE_PATH,PAUSE_MSG_TEXT_SIZE,PAUSE_MESSAGE,WHITE,PAUSE_MSG_TEXT_X,PAUSE_MSG_TEXT_Y };
+
+	Sound_Effect ball_sound{ BALL_SOUND_EFFECT_FILE_PATH };
 
 	void show_main_menu();
 	void show_color_picker(Paddle& paddle, Text& score_text, bool paused = false);

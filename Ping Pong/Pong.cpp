@@ -11,11 +11,6 @@ Pong::Pong()
 	show_main_menu();
 }
 
-Pong::~Pong()
-{
-	SDL_Quit();
-}
-
 void Pong::show_main_menu()
 {
 	graphics.clear_screen();
@@ -282,6 +277,11 @@ void Pong::update()
 	}
 	if (left_player_score == 11) left_win = true;
 	else if (right_player_score == 11) right_win = true;
+
+	if (collision != Collision::NONE)
+	{
+		ball_sound.play();
+	}
 }
 
 void Pong::draw()

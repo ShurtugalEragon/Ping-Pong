@@ -1,6 +1,7 @@
 #pragma once
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "SDL_mixer.h"
 #include <memory>
 
 struct SDL_Deleter
@@ -10,6 +11,7 @@ struct SDL_Deleter
 	void operator()(SDL_Renderer* ptr) { if (ptr) SDL_DestroyRenderer(ptr); }
 	void operator()(SDL_Window* ptr) { if (ptr) SDL_DestroyWindow(ptr); }
 	void operator()(TTF_Font* ptr) { if (ptr) TTF_CloseFont(ptr); }
+	void operator()(Mix_Chunk* ptr) { if (ptr) Mix_FreeChunk(ptr); }
 };
 
 using surface_ptr = std::unique_ptr<SDL_Surface, SDL_Deleter>;
@@ -17,3 +19,4 @@ using texture_ptr = std::unique_ptr<SDL_Texture, SDL_Deleter>;
 using renderer_ptr = std::unique_ptr<SDL_Renderer, SDL_Deleter>;
 using window_ptr = std::unique_ptr<SDL_Window, SDL_Deleter>;
 using font_ptr = std::unique_ptr<TTF_Font, SDL_Deleter>;
+using mix_chunk_ptr = std::unique_ptr<Mix_Chunk, SDL_Deleter>;
