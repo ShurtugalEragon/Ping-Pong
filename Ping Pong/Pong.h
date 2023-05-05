@@ -7,6 +7,7 @@
 #include "Text.h"
 #include "Button.h"
 #include "Sound_Effect.h"
+#include "Volume_Slide.h"
 
 class Pong
 {
@@ -35,7 +36,7 @@ private:
 
 	//--------------------------BALL CONSTANTS----------------------------
 	
-	static constexpr int BALL_SPEED = 800;
+	static constexpr int BALL_SPEED = 900;
 	static constexpr int BALL_SIDE_LENGTH = 10;
 	const int BALL_START_X = WINDOW_WIDTH / 2;
 	const int BALL_START_Y = WINDOW_HEIGHT / 2;
@@ -50,7 +51,7 @@ private:
 
 	//--------------------------PADDLE CONSTANTS--------------------------
 	
-	static constexpr int PADDLE_SPEED = 500;
+	static constexpr int PADDLE_SPEED = 600;
 	const int LEFT_PADDLE_START_X = WINDOW_WIDTH / 38;
 	const int LEFT_PADDLE_START_Y = WINDOW_HEIGHT / 21;
 	const int RIGHT_PADDLE_START_X = WINDOW_WIDTH - LEFT_PADDLE_START_X;
@@ -67,19 +68,22 @@ private:
 
 	//--------------------------TEXT CONSTANTS----------------------------
 	
-	static constexpr int SCORE_TEXT_SIZE = 60;
-	static constexpr int WIN_MSG_TEXT_SIZE = 75;
+	const int SCORE_TEXT_SIZE = WINDOW_HEIGHT / 12;
+	const int WIN_MSG_TEXT_SIZE = WINDOW_HEIGHT / 13;
 	const int LEFT_SCORE_TEXT_X = WINDOW_WIDTH / 4;
 	const int RIGHT_SCORE_TEXT_X = WINDOW_WIDTH * 0.75;
 	const int SCORE_TEXT_Y = WINDOW_HEIGHT / 22;
-	const int WIN_MSG_TEXT_X = WINDOW_WIDTH / 3.25;
+	const int WIN_MSG_TEXT_X = WINDOW_WIDTH / 2.75;
 	const int WIN_MSG_TEXT_Y = WINDOW_HEIGHT / 3;
 	const std::string LEFT_WIN_MESSAGE = "Left player wins!";
 	const std::string RIGHT_WIN_MESSAGE = "Right player wins!";
 	const int PAUSE_MSG_TEXT_X = WINDOW_WIDTH / 2.4;
 	const int PAUSE_MSG_TEXT_Y = WINDOW_HEIGHT / 8;
-	static constexpr int PAUSE_MSG_TEXT_SIZE = 75;
+	const int PAUSE_MSG_TEXT_SIZE = WINDOW_HEIGHT / 14;
 	const std::string PAUSE_MESSAGE = "Paused";
+	const int BALL_VOLUME_TEXT_SIZE = WINDOW_HEIGHT / 13;
+	const int BALL_VOLUME_TEXT_X = WINDOW_WIDTH / 2.45;
+	const int BALL_VOLUME_TEXT_Y = WINDOW_HEIGHT / 3;
 
 	//--------------------------------------------------------------------
 
@@ -120,16 +124,22 @@ private:
 
 	//--------------------------BUTTON CONSTANTS--------------------------
 	
-	const int START_BUTTON_Y = WINDOW_HEIGHT / 8;
-	const int BALL_COLOR_Y = WINDOW_HEIGHT / 3.5;
-	const int QUIT_BUTTON_Y = WINDOW_HEIGHT * 0.78;
-	const int LEFT_PADDLE_COLOR_Y = WINDOW_HEIGHT / 2.25;
-	const int RIGHT_PADDLE_COLOR_Y = WINDOW_HEIGHT / 1.65;
-	static constexpr int BUTTON_TEXT_SIZE = 40;
-	static constexpr int BUTTON_VERTICAL_PADDING = 10;
-	static constexpr int BUTTON_HORIZONTAL_PADDING = 250;
-	static constexpr int BALL_COLOR_BUTTON_HORIZONTAL_PADDING = 145;
-	static constexpr int COLOR_BUTTON_HORIZONTAL_PADDING = 82;
+	const int PLAY_BUTTON_Y = WINDOW_HEIGHT / 9.61;
+	const int AUDIO_BUTTON_Y = WINDOW_HEIGHT / 4;
+	const int BALL_COLOR_Y = WINDOW_HEIGHT / 2.5;
+	const int LEFT_PADDLE_COLOR_Y = WINDOW_HEIGHT / 1.82;
+	const int RIGHT_PADDLE_COLOR_Y = WINDOW_HEIGHT / 1.43;
+	const int QUIT_BUTTON_Y = WINDOW_HEIGHT / 1.18;
+
+	const int BUTTON_TEXT_SIZE = WINDOW_HEIGHT / 20;
+	const int BUTTON_VERTICAL_PADDING =	WINDOW_HEIGHT / 50;
+	const int PLAY_BUTTON_HORIZONTAL_PADDING = WINDOW_HEIGHT / 3;
+	const int AUDIO_BUTTON_HORIZONTAL_PADDING = WINDOW_HEIGHT / 3.15;
+	const int BALL_COLOR_BUTTON_HORIZONTAL_PADDING = WINDOW_HEIGHT / 4.9;
+	const int LEFT_COLOR_BUTTON_HORIZONTAL_PADDING = WINDOW_HEIGHT / 8.108;
+	const int RIGHT_COLOR_BUTTON_HORIZONTAL_PADDING = WINDOW_HEIGHT / 8.61;
+	const int QUIT_BUTTON_HORIZONTAL_PADDING = WINDOW_HEIGHT / 3;
+
 	const int RED_BUTTON_X = WINDOW_WIDTH / 4;
 	const int ORANGE_BUTTON_X = WINDOW_WIDTH / 2;
 	const int YELLOW_BUTTON_X = WINDOW_WIDTH * 0.75;
@@ -137,24 +147,48 @@ private:
 	const int BLUE_BUTTON_X = ORANGE_BUTTON_X;
 	const int INDIGO_BUTTON_X = YELLOW_BUTTON_X;
 	const int VIOLET_BUTTON_X = ORANGE_BUTTON_X;
+
 	const int COLOR_ROW1_Y = WINDOW_HEIGHT / 4;
 	const int COLOR_ROW2_Y = WINDOW_HEIGHT / 2;
 	const int COLOR_ROW3_Y = WINDOW_HEIGHT * 0.75;
+
 	const int COLOR_BUTTON_WIDTH = WINDOW_WIDTH / 20;
 	const int COLOR_BUTTON_HEIGHT = WINDOW_HEIGHT / 12;
 
 	//--------------------------------------------------------------------
+
+
+
+
+
+
+	//--------------------------Volume Constants--------------------------
+	
+	const int BALL_VOLUME_WIDTH = WINDOW_WIDTH / 3;
+	const int BALL_VOLUME_HEIGHT = WINDOW_HEIGHT / 25;
+	const int BALL_VOLUME_X = WINDOW_WIDTH / 2 - BALL_VOLUME_WIDTH / 2;
+	const int BALL_VOLUME_Y = WINDOW_HEIGHT / 2 - BALL_VOLUME_HEIGHT / 2;
+	const int BALL_MAX_VOLUME = MIX_MAX_VOLUME;
+	const SDL_Color BALL_VOLUME_BAR_COLOR = WHITE;
+	const SDL_Color BALL_VOLUME_USER_CHOICE_COLOR = RED;
+
+
+	//--------------------------------------------------------------------
 	
 	
-	Text_Button play_button = Text_Button(graphics, FONT_FILE_PATH, "Play", 0, START_BUTTON_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, BUTTON_HORIZONTAL_PADDING, WHITE);
+	Text_Button play_button = Text_Button(graphics, FONT_FILE_PATH, "Play", 0, PLAY_BUTTON_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, PLAY_BUTTON_HORIZONTAL_PADDING, WHITE);
+
+	Text_Button audio_button = Text_Button(graphics, FONT_FILE_PATH, "Audio", 0, AUDIO_BUTTON_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, AUDIO_BUTTON_HORIZONTAL_PADDING, WHITE);
 
 	Text_Button ball_color = Text_Button(graphics, FONT_FILE_PATH, "Choose ball color", 0, BALL_COLOR_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, BALL_COLOR_BUTTON_HORIZONTAL_PADDING, WHITE);
 
-	Text_Button left_paddle_color = Text_Button(graphics, FONT_FILE_PATH, "Choose left paddle color", 0, LEFT_PADDLE_COLOR_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, COLOR_BUTTON_HORIZONTAL_PADDING, WHITE);
+	Text_Button left_paddle_color = Text_Button(graphics, FONT_FILE_PATH, "Choose left paddle color", 0, LEFT_PADDLE_COLOR_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, LEFT_COLOR_BUTTON_HORIZONTAL_PADDING, WHITE);
 
-	Text_Button right_paddle_color = Text_Button(graphics, FONT_FILE_PATH, "Choose right paddle color", 0, RIGHT_PADDLE_COLOR_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, COLOR_BUTTON_HORIZONTAL_PADDING, WHITE);
+	Text_Button right_paddle_color = Text_Button(graphics, FONT_FILE_PATH, "Choose right paddle color", 0, RIGHT_PADDLE_COLOR_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, RIGHT_COLOR_BUTTON_HORIZONTAL_PADDING, WHITE);
 
-	Text_Button quit_button = Text_Button(graphics, FONT_FILE_PATH, "Quit", 0, QUIT_BUTTON_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, BUTTON_HORIZONTAL_PADDING, WHITE);
+	Text_Button quit_button = Text_Button(graphics, FONT_FILE_PATH, "Quit", 0, QUIT_BUTTON_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, QUIT_BUTTON_HORIZONTAL_PADDING, WHITE);
+
+	Text_Button back_button = Text_Button(graphics, FONT_FILE_PATH, "Back", 0, QUIT_BUTTON_Y, BUTTON_TEXT_SIZE, BUTTON_VERTICAL_PADDING, QUIT_BUTTON_HORIZONTAL_PADDING, WHITE);
 
 	Button red = Button(graphics, RED_BUTTON_X, COLOR_ROW1_Y, COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT, RED);
 	Button orange = Button(graphics, ORANGE_BUTTON_X, COLOR_ROW1_Y, COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT, ORANGE);
@@ -183,9 +217,14 @@ private:
 
 	Sound_Effect ball_sound{ BALL_SOUND_EFFECT_FILE_PATH };
 
+	Volume_Slide ball_volume{ BALL_VOLUME_X,BALL_VOLUME_Y,BALL_VOLUME_WIDTH,BALL_VOLUME_HEIGHT,BALL_MAX_VOLUME,BALL_VOLUME_BAR_COLOR,BALL_VOLUME_USER_CHOICE_COLOR };
+
+	Text ball_volume_text{ graphics,FONT_FILE_PATH,BALL_VOLUME_TEXT_SIZE,"Ball Bounce",WHITE,BALL_VOLUME_TEXT_X,BALL_VOLUME_TEXT_Y };
+
 	void show_main_menu();
 	void show_color_picker(Paddle& paddle, Text& score_text, bool paused = false);
 	void show_color_picker(Ball& ball, bool paused = false);
+	void show_volume_menu();
 	void handle_key_press(const SDL_Event& e);
 	void update();
 	void draw();

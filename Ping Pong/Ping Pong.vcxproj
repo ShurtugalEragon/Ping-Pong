@@ -148,6 +148,7 @@
     <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="Pong.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Volume_Slide.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="sdl2_memory.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="Volume_Slide.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />

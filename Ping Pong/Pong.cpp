@@ -15,6 +15,7 @@ void Pong::show_main_menu()
 {
 	graphics.clear_screen();
 	play_button.draw(graphics);
+	audio_button.draw(graphics);
 	ball_color.draw(graphics);
 	left_paddle_color.draw(graphics);
 	right_paddle_color.draw(graphics);
@@ -36,6 +37,7 @@ void Pong::show_main_menu()
 				reset();
 				start();
 			}
+			else if (audio_button.clicked()) show_volume_menu();
 			else if (ball_color.clicked()) show_color_picker(ball);
 			else if (left_paddle_color.clicked()) show_color_picker(left_paddle,left_player_score_text);
 			else if (right_paddle_color.clicked()) show_color_picker(right_paddle,right_player_score_text);
@@ -75,50 +77,106 @@ void Pong::show_color_picker(Paddle& paddle, Text& score_text, bool paused)
 			{
 				paddle.change_color(RED);
 				score_text.change_color(RED, graphics);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (orange.clicked())
 			{
 				paddle.change_color(ORANGE);
-				score_text.change_color(ORANGE,graphics);
-				if (paused) start();
-				show_main_menu();
+				score_text.change_color(ORANGE, graphics);
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (yellow.clicked())
 			{
 				paddle.change_color(YELLOW);
-				score_text.change_color(YELLOW,graphics);
-				if (paused) start();
-				show_main_menu();
+				score_text.change_color(YELLOW, graphics);
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (green.clicked())
 			{
 				paddle.change_color(GREEN);
-				score_text.change_color(GREEN,graphics);
-				if (paused) start();
-				show_main_menu();
+				score_text.change_color(GREEN, graphics);
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (blue.clicked())
 			{
 				paddle.change_color(BLUE);
-				score_text.change_color(BLUE,graphics);
-				if (paused) start();
-				show_main_menu();
+				score_text.change_color(BLUE, graphics);
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (indigo.clicked())
 			{
 				paddle.change_color(INDIGO);
-				score_text.change_color(INDIGO,graphics);
-				if (paused) start();
-				show_main_menu();
+				score_text.change_color(INDIGO, graphics);
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (violet.clicked())
 			{
 				paddle.change_color(VIOLET);
-				score_text.change_color(VIOLET,graphics);
-				if (paused) start();
-				show_main_menu();
+				score_text.change_color(VIOLET, graphics);
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 		}
 	}
@@ -154,47 +212,149 @@ void Pong::show_color_picker(Ball& ball, bool paused)
 			if (red.clicked())
 			{
 				ball.change_color(RED);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (orange.clicked())
 			{
 				ball.change_color(ORANGE);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (yellow.clicked())
 			{
 				ball.change_color(YELLOW);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (green.clicked())
 			{
 				ball.change_color(GREEN);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (blue.clicked())
 			{
 				ball.change_color(BLUE);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (indigo.clicked())
 			{
 				ball.change_color(INDIGO);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 			else if (violet.clicked())
 			{
 				ball.change_color(VIOLET);
-				if (paused) start();
-				show_main_menu();
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
 			}
 		}
 	}
+}
+
+void Pong::show_volume_menu()
+{
+	graphics.clear_screen();
+	ball_volume_text.draw(graphics);
+	back_button.draw(graphics);
+	ball_volume.draw(graphics);
+	graphics.present();
+
+	SDL_Event event;
+	while (!quit)
+	{
+		while (SDL_PollEvent(&event))
+		{
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				quit = true;
+				break;
+			}
+			if (back_button.clicked())
+			{
+				if (paused)
+				{
+					paused = false;
+					start();
+				}
+				else
+				{
+					reset();
+					show_main_menu();
+				}
+			}
+			bool updated = ball_volume.update(ball_sound.get_chunk());
+			if (updated)
+			{
+				graphics.clear_screen();
+				ball_volume_text.draw(graphics);
+				back_button.draw(graphics);
+				ball_volume.draw(graphics);
+				graphics.present();
+			}
+		}
+	}
+
 }
 
 void Pong::handle_key_press(const SDL_Event& e)
@@ -337,6 +497,7 @@ void Pong::pause()
 {
 	graphics.clear_screen();
 	pause_text.draw(graphics);
+	audio_button.draw(graphics);
 	ball_color.draw(graphics);
 	left_paddle_color.draw(graphics);
 	right_paddle_color.draw(graphics);
@@ -359,7 +520,8 @@ void Pong::pause()
 					start();
 				}
 			}
-			if (ball_color.clicked()) show_color_picker(ball,true);
+			if (audio_button.clicked()) show_volume_menu();
+			else if (ball_color.clicked()) show_color_picker(ball,true);
 			else if (left_paddle_color.clicked()) show_color_picker(left_paddle, left_player_score_text,true);
 			else if (right_paddle_color.clicked()) show_color_picker(right_paddle, right_player_score_text,true);
 			else if (quit_button.clicked()) quit = true;

@@ -8,4 +8,4 @@ Controls:
 	Up Arrow - move right paddle up,
 	Down Arrow - move right paddle down,
 	p - pause game,
-	m - main menu
+	m - main menu (resets the game)
